@@ -38,4 +38,5 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 include(cppref_test)
+add_subdirectory(doc)
 add_subdirectory(src)

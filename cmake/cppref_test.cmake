@@ -19,6 +19,6 @@ function(add_gtest)
 
     add_test(
         NAME ${G_TEST_NAME}
-        COMMAND ts_${G_TEST_NAME}
+        COMMAND ${G_TEST_NAME}
     )
 endfunction()

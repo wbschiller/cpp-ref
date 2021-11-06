@@ -31,10 +31,10 @@ using Event = std::variant<Event1, Event2, Event3, Event4>;
 class MockState
 {
 public:
-  MOCK_METHOD1(LogTransition, void(const char *previous));
-  MOCK_METHOD0(GetName, const char *());
-  MOCK_METHOD0(Enter, void());
-  MOCK_METHOD0(Exit, void());
+  MOCK_METHOD(void, LogTransition, (const char *previous));
+  MOCK_METHOD(const char *, GetName, ());
+  MOCK_METHOD(void, Enter, ());
+  MOCK_METHOD(void, Exit, ());
 };
 
 struct BaseState

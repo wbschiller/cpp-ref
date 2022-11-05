@@ -6,9 +6,16 @@ on C++v17 or later features to implement Design Patterns following a Functional 
 approach.
 
 ## Build
-Build and run the unit tests as follows (tested on Ubuntu):
+Build and run the unit tests (tested on Ubuntu):
 ```
 cmake -B build
+cd build
+make
+ctest -V
+```
+Build and run the unit tests as using clang
+```
+cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -B build
 cd build
 make
 ctest -V

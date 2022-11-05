@@ -3,6 +3,9 @@ function(add_gtest)
     cmake_parse_arguments(G_TEST "" "NAME" "SRCS;LIBS" ${ARGN})
 
     add_executable(${G_TEST_NAME} ${G_TEST_SRCS})
+    if (DO_CLANG_TIDY)
+      set_target_properties(${G_TEST_NAME} PROPERTIES CXX_CLANG_TIDY "${DO_CLANG_TIDY}")
+    endif()
 
     target_include_directories(
         ${G_TEST_NAME}

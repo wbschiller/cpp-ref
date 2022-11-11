@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.14.0)
 
-project(CppRef CXX)
+set(PROJECT_NAME CppRef)
+project(${PROJECT_NAME} LANGUAGES CXX)
 
 # Global C/C++ language options
 set(CMAKE_CXX_STANDARD 17)
@@ -18,9 +19,21 @@ list(APPEND CMAKE_MODULE_PATH
 # by passing a value to `-D` on the cmake command line.
 option(CPPREF_ENABLE_SANITIZE "Enable address sanitizization" FALSE)
 option(CPPREF_ENABLE_WERROR "Turn all warnings into errors" FALSE)
+option(CPPREF_ENABLE_TIDY "Build with clang-tidy if it is installed" FALSE)
 
 if(CPPREF_ENABLE_WERROR)
   add_compile_options(-Werror)
+endif()
+
+if(CPPREF_ENABLE_TIDY)
+  # Add clang-tidy target
+  find_program(CLANG_TIDY_EXE NAMES clang-tidy)
+  if (CLANG_TIDY_EXE)
+    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+    set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "--header-filter=src/*")
+  else()
+    message(STATUS "clang-tidy not found.")
+  endif()
 endif()
 
 # Build googletest as part of this project
@@ -30,7 +43,7 @@ include(FetchContent)
 FetchContent_Declare(
   googletest
   GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG        e2239ee6043f73722e7aa812a459f54a28552929 # release-1.11.0
+  GIT_TAG        58d77fa8070e8cec2dc1ed015d66b454c8d78850 # release-1.12.1
 )
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
@@ -40,3 +53,6 @@ enable_testing()
 include(cppref_test)
 add_subdirectory(doc)
 add_subdirectory(src)
+
+include(clang_format)
+clangformat_add_recursively(src src/*.cpp src/*.hpp)

@@ -20,6 +20,7 @@ list(APPEND CMAKE_MODULE_PATH
 option(CPPREF_ENABLE_SANITIZE "Enable address sanitizization" FALSE)
 option(CPPREF_ENABLE_WERROR "Turn all warnings into errors" FALSE)
 option(CPPREF_ENABLE_TIDY "Build with clang-tidy if it is installed" FALSE)
+option(CPPREF_BUILD_EXAMPLE "Build example" FALSE)
 
 if(CPPREF_ENABLE_WERROR)
   add_compile_options(-Werror)
@@ -35,6 +36,8 @@ if(CPPREF_ENABLE_TIDY)
     message(STATUS "clang-tidy not found.")
   endif()
 endif()
+
+include(clang_format)
 
 # Build googletest as part of this project
 set(GTEST_HAS_PTHREAD 1)
@@ -52,7 +55,10 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 include(cppref_test)
 add_subdirectory(doc)
+add_subdirectory(extern)
 add_subdirectory(src)
 
-include(clang_format)
-clangformat_add_recursively(src src/*.cpp src/*.hpp)
+if(CPPREF_BUILD_EXAMPLE)
+    message(STATUS "Generating example(s)")
+    add_subdirectory(example)
+endif()

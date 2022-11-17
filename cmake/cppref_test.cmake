@@ -25,3 +25,16 @@ function(add_gtest)
         COMMAND ${G_TEST_NAME}
     )
 endfunction()
+
+function(add_cppref_executable)
+    cmake_parse_arguments(CPPREF_EXE "" "NAME" "SRCS;LIBS" ${ARGN})
+
+    add_executable(${CPPREF_EXE_NAME} ${CPPREF_EXE_SRCS})
+    target_link_libraries(${CPPREF_EXE_NAME}
+        ${CPPREF_EXE_LIBS}
+    )
+
+    if (DO_CLANG_TIDY)
+        set_target_properties(${CPPREF_EXE_NAME} PROPERTIES CXX_CLANG_TIDY "${DO_CLANG_TIDY}")
+    endif()
+endfunction()

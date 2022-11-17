@@ -4,11 +4,10 @@
 #include <iostream>
 
 using namespace std::chrono_literals;
+namespace fs = std::filesystem;
 
 #include "spdlog/fmt/chrono.h"
 #include "spdlog/spdlog.h"
-
-auto file_time_to_sys() {}
 
 /**
  * An approximation from file time to system time.  This is as good as you can
@@ -29,20 +28,43 @@ auto main() -> int
 {
   // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 
-  auto p = std::filesystem::temp_directory_path() / "example.bin";
+  // Create a file and manipulate its write time
+  auto p = fs::temp_directory_path() / "example.bin";
   std::ofstream{p.c_str()}.put('a'); // create file
 
-  auto ftime = std::filesystem::last_write_time(p);
+  std::error_code ec;
+  auto ftime = fs::last_write_time(p, ec);
   spdlog::info("File write time is {}", to_system_time(ftime));
 
   // move file write time 1 hour to the future
-  std::filesystem::last_write_time(p, ftime + 1h);
+  fs::last_write_time(p, ftime + 1h, ec);
 
   // read back from the filesystem
-  ftime = std::filesystem::last_write_time(p);
+  ftime = fs::last_write_time(p, ec);
   spdlog::info("File write time is {}", to_system_time(ftime));
 
-//  std::filesystem::remove(p);
+  fs::remove(p);
+
+  // Read the contents of the log.txt file in the current director
+  auto log = fs::path("log.txt");
+  std::ifstream ifs(log);
+
+  if (!fs::exists(log, ec)) {
+    spdlog::error("File does not exits {}", log.string());
+  } else if (ifs) {
+    fmt::print("----------- File contents start: {} -----------\n",
+               log.string());
+    while (!ifs.eof()) {
+      std::string str;
+      std::getline(ifs, str);
+      fmt::print("{}\n", str);
+    }
+    fmt::print("----------- File contents end: {}   -----------\n",
+               log.string());
+    ifs.close();
+  } else {
+    spdlog::error("Unable to open {}", log.string());
+  }
 
   // NOLINTEND(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 

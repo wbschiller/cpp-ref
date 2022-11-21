@@ -36,3 +36,7 @@ The Sequential State Machine is more common and is actually a series of steps.  
 In the second category of Finite State Machine, the states and transitons occur repeatedly (consider a transmission shifting between gears).  This design pattern is a nice fit for the Finite State Machine.
 
 As a related note, some languages like Rust, provide a preferred approach for handling asynchronous operation.  For instance, the Rust Tokio Crate provides a runtime that supports async operations and allows for tasks that look to be blocking but are actually receiving async feedback.  The result is that much of the complexity falls out.
+
+### Configuration Pattern
+The configuration utility [src/util/cfg/cfg.hpp](src/util/cfg/cfg.hpp) library is more of a reference implementation than a design pattern.  This includes features that are commonly needed in a configuration system.  The goal of this reference design is to create a simple design that separates the responsibilities into separate components.
+

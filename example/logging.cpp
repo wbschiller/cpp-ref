@@ -5,7 +5,7 @@
 #include "spdlog/spdlog.h"
 
 /**
- * A simple example for using spdlog as a logger for a programm
+ * A simple example for using spdlog as a logger for a program
  */
 auto main() -> int
 {

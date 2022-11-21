@@ -22,12 +22,10 @@ auto to_system_time(TP tp) -> std::chrono::time_point<std::chrono::system_clock>
 }
 
 /**
- * A simple example for using spdlog as a logger for a programm
+ * A simple example for file accessing using std::filesystem
  */
 auto main() -> int
 {
-  // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
-
   // Create a file and manipulate its write time
   auto p = fs::temp_directory_path() / "example.bin";
   std::ofstream{p.c_str()}.put('a'); // create file
@@ -65,8 +63,6 @@ auto main() -> int
   } else {
     spdlog::error("Unable to open {}", log.string());
   }
-
-  // NOLINTEND(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
 
   return 0;
 }

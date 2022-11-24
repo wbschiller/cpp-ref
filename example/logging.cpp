@@ -1,10 +1,11 @@
 
 #include "spdlog/async.h"
+#include "spdlog/fmt/chrono.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/spdlog.h"
 
 /**
- * A simple example for using spdlog as a logger for a programm
+ * A simple example for using spdlog as a logger for a program
  */
 auto main() -> int
 {
@@ -28,8 +29,11 @@ auto main() -> int
   spdlog::warn("Easy padding in numbers like {:08d}", 12);
   spdlog::critical(
       "Support for int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", 42);
+  auto now = std::chrono::system_clock::now();
+  spdlog::info("Here's the current clock from std::chrono {}", now);
+
   spdlog::info("Support for floats {:03.2f}", 1.23456);
-  spdlog::info("Positional args are {1} {0}..", "too", "supported");
+  spdlog::error("Positional args are {1} {0}..", "too", "supported");
   spdlog::info("{:>8} aligned, {:<8} aligned", "right", "left");
 
   // Runtime log levels

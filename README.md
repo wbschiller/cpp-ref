@@ -8,15 +8,15 @@ approach.
 ## Build
 Build and run the unit tests (tested on Ubuntu):
 ```
-cmake -B build
-cd build
+cmake -B ~/build/cppref
+cd ~/build/cppref
 make
 ctest -V
 ```
 Build and run the unit tests as using clang
 ```
-cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -B build
-cd build
+cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -B ~/build/cppref-clang
+cd ~/build/cppref-clang
 make
 ctest -V
 ```

@@ -18,9 +18,15 @@ jobs:
  
   build:
     runs-on: ubuntu-latest
+    container: ghcr.io/wbschiller/cpp-ref-build:latest
+      # image: ghcr.io/wbschiller/cpp-ref-build:latest
+      # credentials:
+      #   username: ${{ github.actor }}
+      #   password: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout 
+      uses: actions/checkout@v3
       with:
         submodules: recursive
 
@@ -34,13 +40,13 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Test
-      working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{env.BUILD_TYPE}}
+      run: ctest --test-dir ${{github.workspace}}/build -C ${{env.BUILD_TYPE}}
       
   checker:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    container: ghcr.io/wbschiller/cpp-ref-build:latest
 
     steps:
     - uses: actions/checkout@v3

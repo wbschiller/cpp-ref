@@ -4,7 +4,13 @@
 	"name": "C++",
 	"build": {
 		"dockerfile": "Dockerfile"
-	}
+	},
+	// "extensions": [
+    //     "ms-vscode.cpptools",
+    //     "ms-vscode.cmake-tools",
+    //     "vadimcn.vscode-lldb",
+    //     "cheshirekow.cmake-format"
+    // ],
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

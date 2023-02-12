@@ -18,7 +18,8 @@ jobs:
  
   build:
     runs-on: ubuntu-latest
-    container: ghcr.io/wbschiller/cpp-ref-build:latest
+    # specify my container available publicly on docker hub
+    container: billschiller763/cpp-ref-builder:latest
       # image: ghcr.io/wbschiller/cpp-ref-build:latest
       # credentials:
       #   username: ${{ github.actor }}
